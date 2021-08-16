@@ -1,9 +1,8 @@
 package com.spaf.todo.controller;
 
-import com.spaf.todo.exception.InvalidRetrieveArgumentException;
-import com.spaf.todo.exception.InvalidTaskException;
-import com.spaf.todo.exception.InvalidTaskTypeException;
+import com.spaf.todo.exception.*;
 import com.spaf.todo.model.AddToDoRequest;
+import com.spaf.todo.model.CompleteToDoRequest;
 import com.spaf.todo.model.ToDo;
 import com.spaf.todo.service.ToDoService;
 import lombok.AllArgsConstructor;
@@ -36,5 +35,15 @@ public class ToDoController {
             @RequestParam(defaultValue = "createdAt") String columnName) throws InvalidRetrieveArgumentException {
 
         return ResponseEntity.ok(service.findAll(sortDirection, columnName));
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ToDo> completeToDo(
+            @PathVariable Long id,
+            @RequestBody CompleteToDoRequest request
+    )
+            throws ToDoNotFoundException, AlreadyCompletedException, InvalidWorkingTimeException {
+
+        return ResponseEntity.ok(service.completeToDo(id, request));
     }
 }

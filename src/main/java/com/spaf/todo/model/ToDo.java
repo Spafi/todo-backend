@@ -23,7 +23,9 @@ public class ToDo {
     private String name;
     private LocalDate createdAt;
     private LocalDate expirationDate;
+    private LocalDate finishedAt;
     private int durationEstimate;
+    private int actualWorkedTime;
 
     @Enumerated(EnumType.STRING)
     private TaskType type;
