@@ -50,7 +50,8 @@ public class ToDoController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Boolean> deleteToDo(@PathVariable Long id) {
+    public ResponseEntity<Boolean> deleteToDo(@PathVariable Long id)
+            throws ToDoNotFoundException, InvalidTaskException {
         log.info("Delete todo with id: {} ", id);
         service.deleteToDo(id);
         return ResponseEntity.ok(true);
