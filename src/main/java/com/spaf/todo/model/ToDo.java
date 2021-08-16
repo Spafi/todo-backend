@@ -1,6 +1,5 @@
 package com.spaf.todo.model;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Data
 @Entity
@@ -27,4 +27,13 @@ public class ToDo {
 
     @Enumerated(EnumType.STRING)
     private TaskType type;
+
+    @Transient
+    private int timeRemaining;
+
+    @PostLoad
+    public void postLoad() {
+        timeRemaining = Period.between(LocalDate.now(), expirationDate).getDays();
+    }
+
 }
