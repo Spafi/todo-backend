@@ -25,7 +25,7 @@ public class ToDoController {
     @PostMapping
     public ResponseEntity<ToDo> addToDo(@RequestBody AddToDoRequest toDo)
             throws InvalidTaskException, InvalidTaskTypeException {
-        log.info("New task: {}", toDo);
+        log.info("New todo: {}", toDo);
         return ResponseEntity.ok(service.addToDo(toDo));
     }
 
@@ -33,6 +33,7 @@ public class ToDoController {
     public ResponseEntity<List<ToDo>> getAllToDosSortedAndOrdered(
             @RequestParam(defaultValue = "ASC") String sortDirection,
             @RequestParam(defaultValue = "createdAt") String columnName) throws InvalidRetrieveArgumentException {
+        log.info("List all todos\nSort direction: {}\nColumn name: {}\n", sortDirection, columnName);
 
         return ResponseEntity.ok(service.findAll(sortDirection, columnName));
     }
@@ -43,7 +44,15 @@ public class ToDoController {
             @RequestBody CompleteToDoRequest request
     )
             throws ToDoNotFoundException, AlreadyCompletedException, InvalidWorkingTimeException {
+        log.info("Complete todo with id: {}\nRequest: {}\n", id, request);
 
         return ResponseEntity.ok(service.completeToDo(id, request));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Boolean> deleteToDo(@PathVariable Long id) {
+        log.info("Delete todo with id: {} ", id);
+        service.deleteToDo(id);
+        return ResponseEntity.ok(true);
     }
 }

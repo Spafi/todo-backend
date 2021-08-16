@@ -25,11 +25,12 @@ public class ToDoServiceImplementation implements ToDoService {
     private final static String INVALID_EXPIRATION_MESSAGE = "Task expiration date can't be in the past!";
     private final static String INVALID_SORT_MESSAGE = "Invalid sort parameter!";
     private final static String INVALID_COLUMN_MESSAGE = "Invalid column parameter!";
-    private final static String NOT_FOUND_MESSAGE = "To-do not found!";
-    private final static String ALREADY_COMPLETED_MESSAGE = "To-do already completed!";
+    private final static String NOT_FOUND_MESSAGE = "Task not found!";
+    private final static String ALREADY_COMPLETED_MESSAGE = "Task already completed!";
     private final static String EXCEDED_MAX_WORK_TIME_MESSAGE =
             "Working time cannot exceed time passed since task is created!";
     private final static String NEGATIVE_WORK_TIME_MESSAGE = "Worked time can't be negative!";
+    private final static String CANT_DELETE_COMPLETED_MESSAGE = "Can't delete a completed task!";
 
     private LocalDate convertStringToLocalDate(String dateString) {
         return LocalDate.parse(dateString);
@@ -104,5 +105,13 @@ public class ToDoServiceImplementation implements ToDoService {
         return repository.save(toDo);
     }
 
+    @Override
+    public void deleteToDo(Long id) throws ToDoNotFoundException, InvalidTaskException {
+        ToDo toDo = findById(id);
+
+        if (toDo.isCompleted()) throw new InvalidTaskException(CANT_DELETE_COMPLETED_MESSAGE);
+
+        repository.delete(toDo);
+    }
 }
 

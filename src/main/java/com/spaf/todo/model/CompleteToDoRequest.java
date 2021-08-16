@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompleteToDoRequest {
-    private int taskId;
     private int actualWorkedTime;
 }
