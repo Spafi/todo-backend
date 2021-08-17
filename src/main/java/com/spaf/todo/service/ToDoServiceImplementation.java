@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -44,7 +45,7 @@ public class ToDoServiceImplementation implements ToDoService {
 
         LocalDate expirationDate = convertStringToLocalDate(addRequest.getExpirationDate());
         LocalDate now = LocalDate.now();
-        int timeRemaining = Period.between(now, expirationDate).getDays();
+        long timeRemaining = ChronoUnit.DAYS.between(now, expirationDate);
 
         if (expirationDate.isBefore(now))
             throw new InvalidTaskException(INVALID_EXPIRATION_MESSAGE);
@@ -92,9 +93,8 @@ public class ToDoServiceImplementation implements ToDoService {
         if (actualWorkedDays < 0) throw new InvalidWorkingTimeException(NEGATIVE_WORK_TIME_MESSAGE);
 
         LocalDate now = LocalDate.now();
-        Period maxWorkedPeriod = Period.between(toDo.getCreatedAt(), now);
 
-        int maxWorkedDays = maxWorkedPeriod.getDays();
+        long maxWorkedDays = ChronoUnit.DAYS.between(toDo.getCreatedAt(), now);
 
         if (actualWorkedDays > maxWorkedDays) throw new InvalidWorkingTimeException(EXCEDED_MAX_WORK_TIME_MESSAGE);
 

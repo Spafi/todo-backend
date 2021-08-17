@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @Entity
@@ -31,12 +32,12 @@ public class ToDo {
     private TaskType type;
 
     @Transient
-    private Integer timeRemaining;
+    private Long timeRemaining;
 
     @PostLoad
     public void postLoad() {
         if (!isCompleted())
-            timeRemaining = Period.between(LocalDate.now(), expirationDate).getDays();
+            timeRemaining = ChronoUnit.DAYS.between(LocalDate.now(), expirationDate);
     }
 
 }
