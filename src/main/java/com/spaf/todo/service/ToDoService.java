@@ -12,7 +12,8 @@ public interface ToDoService {
     ToDo addToDo(AddToDoRequest toDo) throws InvalidTaskException, InvalidTaskTypeException;
     List<ToDo> findAll(String sortDirection, String columnName) throws InvalidRetrieveArgumentException;
     ToDo findById(Long id) throws ToDoNotFoundException;
-    ToDo completeToDo(Long id, CompleteToDoRequest request) throws ToDoNotFoundException, AlreadyCompletedException, InvalidWorkingTimeException;
+    ToDo completeToDo(Long id, CompleteToDoRequest request)
+            throws ToDoNotFoundException, AlreadyCompletedException, InvalidWorkingTimeException;
 
     void deleteToDo(Long id) throws ToDoNotFoundException, InvalidTaskException;
 }

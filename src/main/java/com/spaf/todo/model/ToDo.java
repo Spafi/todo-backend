@@ -31,11 +31,12 @@ public class ToDo {
     private TaskType type;
 
     @Transient
-    private int timeRemaining;
+    private Integer timeRemaining;
 
     @PostLoad
     public void postLoad() {
-        timeRemaining = Period.between(LocalDate.now(), expirationDate).getDays();
+        if (!isCompleted())
+            timeRemaining = Period.between(LocalDate.now(), expirationDate).getDays();
     }
 
 }
