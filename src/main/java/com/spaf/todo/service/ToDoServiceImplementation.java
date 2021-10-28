@@ -7,6 +7,8 @@ import com.spaf.todo.model.TaskType;
 import com.spaf.todo.model.ToDo;
 import com.spaf.todo.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
+import org.junit.Assert;
+import org.junit.Test;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
@@ -79,6 +81,7 @@ public class ToDoServiceImplementation implements ToDoService {
     public ToDo findById(Long id) throws ToDoNotFoundException {
         return repository.findById(id).orElseThrow(() -> new ToDoNotFoundException(NOT_FOUND_MESSAGE));
     }
+
 
     @Override
     public ToDo completeToDo(Long id, CompleteToDoRequest request)

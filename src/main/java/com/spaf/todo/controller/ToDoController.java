@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -23,7 +24,7 @@ public class ToDoController {
     private final ToDoService service;
 
     @PostMapping
-    public ResponseEntity<ToDo> addToDo(@RequestBody AddToDoRequest toDo)
+    public ResponseEntity<ToDo> addToDo(@RequestBody @Valid AddToDoRequest toDo)
             throws InvalidTaskException, InvalidTaskTypeException {
         log.info("New todo: {}", toDo);
         return ResponseEntity.ok(service.addToDo(toDo));
